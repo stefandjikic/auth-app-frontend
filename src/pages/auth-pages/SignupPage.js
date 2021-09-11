@@ -1,13 +1,36 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
+import AuthService from '../../services/authService';
 
 const SignupPage = () => {
+  const history = useHistory();
+  const [notification, setNotification] = useState('');
   const [state, setState] = useState({
     username: '',
     password: '',
   });
 
   const handleSignup = () => {
-    console.log(state);
+    const { username, password } = state;
+    if (username.length < 4 || password.length < 4) {
+      setNotificationFunction('Username and password must contain at least 4 characters');
+    } else {
+      AuthService.signup(state).then((res) => {
+        console.log(res.data);
+        if (res.data === 'OK') {
+          history.push('/');
+        } else {
+          history.push('/signup');
+        }
+      });
+    }
+  };
+
+  const setNotificationFunction = (notification) => {
+    setNotification(notification);
+    if(notification !== '') {
+      setTimeout(() => setNotification(''), 3000);
+    }
   };
 
   return (
@@ -28,6 +51,11 @@ const SignupPage = () => {
           value={state.password}
           onChange={(e) => setState({ ...state, password: e.target.value })}
         />
+        {notification !== '' && (
+          <div class="alert alert-danger" role="alert">
+          {notification}
+        </div>
+        )}
         <button className='btn btn-primary' onClick={handleSignup}>
           Sign Up
         </button>

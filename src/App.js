@@ -1,23 +1,22 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { Provider } from 'react-redux';
 import { BrowserRouter, Route } from 'react-router-dom';
-import axios from 'axios';
+import store from './store/store';
 import LoginPage from './pages/auth-pages/LoginPage';
 import SignupPage from './pages/auth-pages/SignupPage';
 import Navbar from './components/Navbar';
+import HomePage from './pages/home/HomePage';
 
 function App() {
-  useEffect(() => {
-    axios.get('/data').then((res) => {
-      console.log(res.data);
-    });
-  }, []);
-
   return (
-    <BrowserRouter>
-      <Navbar />
-      <Route exact path='/' component={LoginPage} />
-      <Route path='/signup' component={SignupPage} />
-    </BrowserRouter>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Navbar />
+        <Route exact path='/' component={HomePage} />
+        <Route path='/signup' component={SignupPage} />
+        <Route path='/login' component={LoginPage} />
+      </BrowserRouter>
+    </Provider>
   );
 }
 

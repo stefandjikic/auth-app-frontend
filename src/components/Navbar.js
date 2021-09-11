@@ -5,12 +5,15 @@ const Navbar = () => {
   return (
     <nav className='navbar navbar-expand navbar-dark bg-primary'>
       <div className='container-fluid'>
-        <a href='/' className='navbar-brand'>
+        <Link to='/' className='navbar-brand'>
           Auth App
-        </a>
-        <ul className="navbar-nav ml-auto">
-          <li className="nav-item"><Link to="/" className="nav-link">Login</Link></li>
-          <li className="nav-item"><Link to="/signup" className="nav-link">Register</Link></li>
+        </Link>
+        <ul className='navbar-nav ml-auto'>
+          <li className='nav-item'>
+            <Link to='/login' className='nav-link'>
+              Login
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>
